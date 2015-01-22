@@ -12,6 +12,10 @@ if [ "$COREOS_CHANNEL" == "" ] ; then
   exit 0
 fi
 
+if [ "$COREOS_VERSION" == "" ] ; then
+  COREOS_VERSION=current
+fi
+
 # Make temp dir
 DIR=$(mktemp -d)
 pushd $DIR
@@ -29,7 +33,7 @@ export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
 curl https://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.pem | gpg --import -
 
 # Download and check CoreOS Image for NIFTY Cloud
-BASE_URL=http://${COREOS_CHANNEL,,}.release.core-os.net/amd64-usr/current
+BASE_URL=http://${COREOS_CHANNEL,,}.release.core-os.net/amd64-usr/$COREOS_VERSION
 VERSION_TXT=version.txt
 VERSION_TXT_SIG=version.txt.sig
 OVF=coreos_production_niftycloud.ovf
