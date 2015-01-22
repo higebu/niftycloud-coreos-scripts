@@ -1,12 +1,16 @@
 #!/bin/bash -e
 
-# ./import_production_coreos.sh Alpha east-14 fw001
 # You need to set following environment variables.
 # NIFTY_ACCESS_KEY_ID
 # NIFTY_SECRET_KEY
 # NIFTY_ZONE
 # NIFTY_FW_GROUP
 # COREOS_CHANNEL
+
+if [ "$COREOS_CHANNEL" == "" ] ; then
+  echo "You need to set COREOS_CHANNEL"
+  exit 0
+fi
 
 # Make temp dir
 DIR=$(mktemp -d)
