@@ -6,6 +6,7 @@
 # NIFTY_ZONE
 # NIFTY_FW_GROUP
 # COREOS_CHANNEL
+# SUFFIX
 
 if [ "$COREOS_CHANNEL" == "" ] ; then
   echo "You need to set COREOS_CHANNEL"
@@ -18,6 +19,7 @@ fi
 
 # Make temp dir
 DIR=$(mktemp -d)
+cp -p init.sh $DIR/
 pushd $DIR
 
 # Install NIFTY Cloud CLI
@@ -81,6 +83,18 @@ while [ "${STATUS}" != "running" ]; do
     fi
 done
 
+# Reboot and execute startup script to remove machine-id
+echo "Reboot the instance.."
+nifty-reboot-instances ${INSTANCE_ID} -q POST --user-data-file-plain init.sh
+sleep 10
+STATUS=$(get_instance_status ${INSTANCE_ID})
+echo ${STATUS}
+while [ "${STATUS}" != "running" ]; do
+    sleep 10
+    STATUS=$(get_instance_status ${INSTANCE_ID})
+    echo ${STATUS}
+done
+
 echo "Stop the instance.."
 nifty-stop-instances ${INSTANCE_ID}
 STATUS=$(get_instance_status ${INSTANCE_ID})
@@ -99,7 +113,8 @@ get_image_status() {
     echo ${STATUS}
 }
 echo "Create image..."
-IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --name "CoreOS ${COREOS_CHANNEL} ${VERSION}" --left-instance false | awk '{print $2}')
+IMAGE_NAME="CoreOS ${COREOS_CHANNEL} ${VERSION}${SUFFIX}"
+IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --name "${IMAGE_NAME}" --left-instance false | awk '{print $2}')
 STATUS=$(get_image_status ${IMAGE_ID})
 while [ "${STATUS}" != "available" ]; do
     sleep 10
