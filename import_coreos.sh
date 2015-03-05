@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -x
 
 # You need to set following environment variables.
 # NIFTY_ACCESS_KEY_ID
@@ -31,9 +31,6 @@ chmod +x NIFTY_Cloud_api-tools/bin/*
 export NIFTY_CLOUD_HOME=$(pwd)/NIFTY_Cloud_api-tools/
 export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
 
-# Import CoreOS Image Signing Key
-curl https://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.pem | gpg --import -
-
 # Download and check CoreOS Image for NIFTY Cloud
 BASE_URL=http://${COREOS_CHANNEL,,}.release.core-os.net/amd64-usr/$COREOS_VERSION
 VERSION_TXT=version.txt
@@ -43,19 +40,33 @@ OVF_SIG=coreos_production_niftycloud.ovf.sig
 VMDK_BZ2=coreos_production_niftycloud_image.vmdk.bz2
 VMDK_BZ2_SIG=coreos_production_niftycloud_image.vmdk.bz2.sig
 
+# Import CoreOS Image Signing Key
+curl https://coreos.com/security/image-signing-key/CoreOS_Image_Signing_Key.pem | gpg --import -
+
+# Download version.txt
 wget -q ${BASE_URL}/${VERSION_TXT}
 wget -q ${BASE_URL}/${VERSION_TXT_SIG}
 gpg --verify ${VERSION_TXT_SIG}
+
+VERSION=$(grep 'COREOS_VERSION=' ${VERSION_TXT} | awk -F'=' '{print $2}')
+IMAGE_NAME="CoreOS ${COREOS_CHANNEL} ${VERSION}${SUFFIX}"
+
+echo "CoreOS Version: $VERSION"
+
+# Check NIFTY Cloud CoreOS Version
+nifty-describe-images --delimiter ',' --image-name "${IMAGE_NAME}" | grep "${IMAGE_NAME}"
+if [ $? -eq 0 ] ; then
+  echo "${IMAGE_NAME} is already released."
+  exit 0
+fi
+
+# Download OVF and VMDK
 wget -q ${BASE_URL}/${OVF}
 wget -q ${BASE_URL}/${OVF_SIG}
 gpg --verify ${OVF_SIG}
 wget -q ${BASE_URL}/${VMDK_BZ2}
 wget -q ${BASE_URL}/${VMDK_BZ2_SIG}
 gpg --verify ${VMDK_BZ2_SIG}
-
-VERSION=$(grep 'COREOS_VERSION=' ${VERSION_TXT} | awk -F'=' '{print $2}')
-
-echo "CoreOS Version: $VERSION"
 
 bunzip2 ${VMDK_BZ2}
 VMDK="coreos_production_niftycloud_image.vmdk"
@@ -113,7 +124,6 @@ get_image_status() {
     echo ${STATUS}
 }
 echo "Create image..."
-IMAGE_NAME="CoreOS ${COREOS_CHANNEL} ${VERSION}${SUFFIX}"
 IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --name "${IMAGE_NAME}" --left-instance false | awk '{print $2}')
 STATUS=$(get_image_status ${IMAGE_ID})
 while [ "${STATUS}" != "available" ]; do
