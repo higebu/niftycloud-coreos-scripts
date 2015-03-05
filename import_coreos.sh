@@ -8,6 +8,8 @@
 # COREOS_CHANNEL
 # SUFFIX
 
+WORKDIR=$(pwd)
+
 if [ "$COREOS_CHANNEL" == "" ] ; then
   echo "You need to set COREOS_CHANNEL"
   exit 0
@@ -56,8 +58,8 @@ echo "CoreOS Version: $VERSION"
 # Check NIFTY Cloud CoreOS Version
 nifty-describe-images --delimiter ',' --image-name "${IMAGE_NAME}" | grep "${IMAGE_NAME}"
 if [ $? -eq 0 ] ; then
-  echo "${IMAGE_NAME} is already released."
-  exit 0
+    echo "MESSAGE = ${IMAGE_NAME} is already released." > "$WORKDIR/msg.prop"
+    exit 0
 fi
 
 # Download OVF and VMDK
@@ -134,3 +136,4 @@ echo "done."
 
 popd
 rm -rf $DIR
+echo "MESSAGE = ${IMAGE_NAME} is available on NIFTY Cloud!" > "$WORKDIR/msg.prop"
