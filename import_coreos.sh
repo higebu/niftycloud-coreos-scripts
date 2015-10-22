@@ -35,7 +35,7 @@ export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
 
 # Check if NIFTY Cloud is in maintenance.
 NIFTYCLOUD_STATUS=$(nifty-describe-service-status)
-if [ $(echo "${NIFTYCLOUD_STATUS}"|grep "Service.Maintenance") ]; then
+if [ "$(echo "${NIFTYCLOUD_STATUS}"|grep "Service.Maintenance")" ]; then
     echo "MESSAGE = NIFTY Cloud is in maintenance." > "$WORKDIR/msg.prop"
     exit 1
 fi
