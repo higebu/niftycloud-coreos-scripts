@@ -3,6 +3,9 @@
 # You need to set following environment variables.
 # NIFTY_ACCESS_KEY_ID
 # NIFTY_SECRET_KEY
+# NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID
+# NIFTY_CLOUD_STORAGE_SECRET_KEY
+# NIFTY_CLOUD_STORAGE_BACKET_NAME
 # NIFTY_ZONE
 # NIFTY_FW_GROUP
 # COREOS_CHANNEL
@@ -39,6 +42,14 @@ if [ "$(echo "${NIFTYCLOUD_STATUS}"|grep "Service.Maintenance")" ]; then
     echo "MESSAGE = NIFTY Cloud is in maintenance." > "$WORKDIR/msg.prop"
     exit 1
 fi
+
+# Install NIFTY Cloud Storage CLI
+wget -q http://cloud.nifty.com/api/storage/NiftyCloudStorage-SDK-CLI.zip
+unzip NiftyCloudStorage-SDK-CLI.zip
+rm -f NiftyCloudStorage-SDK-CLI.zip
+chmod +x NiftyCloudStorage-SDK-CLI/ncs_cli.sh
+sed -i "s/accessKey =/accessKey = ${NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID}/" credentials.properties
+sed -i "s/secretKey =/secretKey = ${NIFTY_CLOUD_STORAGE_SECRET_KEY}/" credentials.properties
 
 # Download and check CoreOS Image for NIFTY Cloud
 BASE_URL=http://${COREOS_CHANNEL,,}.release.core-os.net/amd64-usr/$COREOS_VERSION
@@ -140,6 +151,12 @@ while [ "${STATUS}" != "available" ]; do
     STATUS=$(get_image_status ${IMAGE_ID})
 done
 echo "done."
+
+# Get and upload CoreOS icon
+pushd NiftyCloudStorage-SDK-CLI
+./ncs_cli.sh get ncss://niftycloud-control-panel/master/coreos.png coreos.png
+./ncs_cli.sh put coreos.png ncss://niftycloud-control-panel/icon/${IMAGE_ID}
+popd
 
 popd
 rm -rf $DIR
