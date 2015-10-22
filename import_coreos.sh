@@ -33,6 +33,13 @@ chmod +x NIFTY_Cloud_api-tools/bin/*
 export NIFTY_CLOUD_HOME=$(pwd)/NIFTY_Cloud_api-tools/
 export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
 
+# Check if NIFTY Cloud is in maintenance.
+NIFTYCLOUD_STATUS=$(nifty-describe-service-status)
+if [ $(echo "${NIFTYCLOUD_STATUS}"|grep "Service.Maintenance") ]; then
+    echo "MESSAGE = NIFTY Cloud is in maintenance." > "$WORKDIR/msg.prop"
+    exit 1
+fi
+
 # Download and check CoreOS Image for NIFTY Cloud
 BASE_URL=http://${COREOS_CHANNEL,,}.release.core-os.net/amd64-usr/$COREOS_VERSION
 VERSION_TXT=version.txt
