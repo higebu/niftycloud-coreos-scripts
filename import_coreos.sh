@@ -48,8 +48,8 @@ wget -q http://cloud.nifty.com/api/storage/NiftyCloudStorage-SDK-CLI.zip
 unzip NiftyCloudStorage-SDK-CLI.zip
 rm -f NiftyCloudStorage-SDK-CLI.zip
 chmod +x NiftyCloudStorage-SDK-CLI/ncs_cli.sh
-sed -i "s/accessKey =/accessKey = ${NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID}/" credentials.properties
-sed -i "s/secretKey =/secretKey = ${NIFTY_CLOUD_STORAGE_SECRET_KEY}/" credentials.properties
+sed -i "s/accessKey =/accessKey = ${NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID}/" NiftyCloudStorage-SDK-CLI/credentials.properties
+sed -i "s/secretKey =/secretKey = ${NIFTY_CLOUD_STORAGE_SECRET_KEY}/" NiftyCloudStorage-SDK-CLI/credentials.properties
 
 # Download and check CoreOS Image for NIFTY Cloud
 BASE_URL=http://${COREOS_CHANNEL,,}.release.core-os.net/amd64-usr/$COREOS_VERSION
