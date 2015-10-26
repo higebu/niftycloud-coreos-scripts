@@ -39,17 +39,9 @@ export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
 # Check if NIFTY Cloud is in maintenance.
 NIFTYCLOUD_STATUS=$(nifty-describe-service-status)
 if [ "$(echo "${NIFTYCLOUD_STATUS}"|grep "Service.Maintenance")" ]; then
-    echo "MESSAGE = NIFTY Cloud is in maintenance." > "$WORKDIR/msg.prop"
+    echo "MESSAGE = NIFTY Cloud is in maintenance."
     exit 1
 fi
-
-# Install NIFTY Cloud Storage CLI
-wget -q http://cloud.nifty.com/api/storage/NiftyCloudStorage-SDK-CLI.zip
-unzip NiftyCloudStorage-SDK-CLI.zip
-rm -f NiftyCloudStorage-SDK-CLI.zip
-chmod +x NiftyCloudStorage-SDK-CLI/ncs_cli.sh
-sed -i "s/accessKey =/accessKey = ${NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID}/" NiftyCloudStorage-SDK-CLI/credentials.properties
-sed -i "s/secretKey =/secretKey = ${NIFTY_CLOUD_STORAGE_SECRET_KEY}/" NiftyCloudStorage-SDK-CLI/credentials.properties
 
 # Download and check CoreOS Image for NIFTY Cloud
 BASE_URL=http://${COREOS_CHANNEL,,}.release.core-os.net/amd64-usr/$COREOS_VERSION
@@ -76,8 +68,8 @@ echo "CoreOS Version: $VERSION"
 # Check NIFTY Cloud CoreOS Version
 nifty-describe-images --delimiter ',' --image-name "${IMAGE_NAME}" | grep "${IMAGE_NAME}"
 if [ $? -eq 0 ] ; then
-    echo "MESSAGE = ${IMAGE_NAME} is already released." > "$WORKDIR/msg.prop"
-    exit 0
+    echo "MESSAGE = ${IMAGE_NAME} is already released."
+    exit 1
 fi
 
 # Download OVF and VMDK
@@ -152,7 +144,17 @@ while [ "${STATUS}" != "available" ]; do
 done
 echo "done."
 
+# Install NIFTY Cloud Storage CLI
+echo "Install NIFTY Cloud Storage CLI..."
+wget -q http://cloud.nifty.com/api/storage/NiftyCloudStorage-SDK-CLI.zip
+unzip NiftyCloudStorage-SDK-CLI.zip
+rm -f NiftyCloudStorage-SDK-CLI.zip
+chmod +x NiftyCloudStorage-SDK-CLI/ncs_cli.sh
+sed -i "s/accessKey =/accessKey = ${NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID}/" NiftyCloudStorage-SDK-CLI/credentials.properties
+sed -i "s/secretKey =/secretKey = ${NIFTY_CLOUD_STORAGE_SECRET_KEY}/" NiftyCloudStorage-SDK-CLI/credentials.properties
+
 # Get and upload CoreOS icon
+echo "Get and upload CoreOS icon"
 pushd NiftyCloudStorage-SDK-CLI
 ./ncs_cli.sh get ncss://niftycloud-control-panel/master/coreos.png coreos.png
 ./ncs_cli.sh put coreos.png ncss://niftycloud-control-panel/icon/${IMAGE_ID}
@@ -160,4 +162,4 @@ popd
 
 popd
 rm -rf $DIR
-echo "MESSAGE = ${IMAGE_NAME} is available on NIFTY Cloud!" > "$WORKDIR/msg.prop"
+echo "MESSAGE = ${IMAGE_NAME} is available on NIFTY Cloud!"

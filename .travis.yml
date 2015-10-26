@@ -7,3 +7,8 @@ env:
   - COREOS_CHANNEL=Alpha
 
 script: ./import_coreos.sh
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
