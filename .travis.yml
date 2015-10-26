@@ -1,0 +1,9 @@
+language: java
+install: true
+jdk: openjdk7
+env:
+  - COREOS_CHANNEL=Stable
+  - COREOS_CHANNEL=Beta
+  - COREOS_CHANNEL=Alpha
+
+script: ./import_coreos.sh
