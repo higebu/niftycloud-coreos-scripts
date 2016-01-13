@@ -6,7 +6,7 @@ env:
   - COREOS_CHANNEL=Beta
   - COREOS_CHANNEL=Alpha
 
-script: ./import_coreos.sh
+script: travis_wait 60 ./import_coreos.sh
 
 notifications:
   email:
