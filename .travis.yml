@@ -5,6 +5,11 @@ env:
   - COREOS_CHANNEL=Stable
   - COREOS_CHANNEL=Beta
   - COREOS_CHANNEL=Alpha
+matrix:
+  allow_failures:
+    - env: COREOS_CHANNEL=Stable
+    - env: COREOS_CHANNEL=Beta
+    - env: COREOS_CHANNEL=Alpha
 
 script: travis_wait 60 ./import_coreos.sh
 
