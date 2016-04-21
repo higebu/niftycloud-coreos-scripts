@@ -2,17 +2,24 @@ language: java
 install: true
 jdk: openjdk7
 env:
+  matrix:
   - COREOS_CHANNEL=Stable
   - COREOS_CHANNEL=Beta
   - COREOS_CHANNEL=Alpha
+  global:
+  - secure: ENTNFaO0hUnceUqjdxiw1Qt0OhZC+RVWfRGdFOSb+lD30YOovaj7kGBg8WgOu8wRpXOv6qOYqP3DVnSFFScSLXzg/ZvwZhMlXkxiodTw4jh3/vmXWs13vEscgXPNWsBpbzlroEd1ArgyEcSWKebPpooqBEXSiuis1jXuFtbbsKE=
+  - secure: gugsA/50T9d+p1ORAgodTzyfudipzU75RHiYHyNGNILj7I0Z0lb9q+uYR4AGlFVBglHSDwBGQPZfmeoQ60zme8NDpXGCMJBA9sdntF6eK2HUFZxcVUW4ZMVRPm9P/KCIPO0qnsttO4ILOS/PjhGI84ospRQwYVJqrhI+IQLbqds=
+  - secure: Jol9khL4xh46vg/NsO2qLnv8TM6uw1twp5N38HPaidOLcB0C3kVxB9U9fxD3g59HvlJVRvsLMsDIsjwR40RBA2FeGKaR5QyfAB2wRAU5x1sE4M62bytlWiAOroSN9XQIaQlqene9u/qAf+5jb94l8ZcZp+BeHTARQfzF5Ssa8nw=
+  - secure: GZ9xCDv8k74DPrZaFI5zUSmfbJ0x4aSlBj/odXhN+FwKnuMuXaaew6UqpkK06XhhohSPoRsCIVswR3ON0fB6j7Uhlwg05R5p/8itdLJtQbM3XI+J4G8v+9obJ4qUEwNH5nirBFRHk4zFh6U0CRimRjrqBiE83iSucTx5oCVYpJE=
+  - secure: aFXLHnwJVFmJnA+3M78zifCKMIw4mrUBIkadNrwwHfuw4p6olHNs0XNoJ6W2tclOo8KTIPNbCCRHTJ1yLrToR0nTBiHVyx66Xs2YAd+9LNYRauT92o2Vy2VU7+l8MnxJXBq7qGVNqOOSC3SO/20LH1n1yaBr70sHkw6ns4j5YAU=
+  - secure: VVonN2XdwShP4E/KA1JLT4cKyCfJKfJuG8KmVcmb+y+7z7YmOLacRCdYPDEA1o3QglWevpbTkWspZXNjZNRLYsNArkoD2lwlOJAen7CoMDYWUHzSmwM11fDr+Xo4aIlQhkkXiO4LRNZZ/8ft5VsMp0xUc/LmtHltFeS99uqt7wM=
+  - secure: MXtPDoMHy7qPIKsrUVXrZbn2mFwuttVXIKLmAHcH3lkoN3ZeOg9Xb04jfKbXU4Dl3edzM2KpAFoPvOaPgO2yxGJGc/h66O5NrDuSKbQNrEvb8XLCKuEFp8f/1AKIlN3K94wDlIutuVQob42O0P3MDXnod5mF2RYAsZfCVx9TCEc=
 matrix:
   allow_failures:
-    - env: COREOS_CHANNEL=Stable
-    - env: COREOS_CHANNEL=Beta
-    - env: COREOS_CHANNEL=Alpha
-
+  - env: COREOS_CHANNEL=Stable
+  - env: COREOS_CHANNEL=Beta
+  - env: COREOS_CHANNEL=Alpha
 script: travis_wait 60 ./import_coreos.sh
-
 notifications:
   email:
     on_success: change

@@ -136,7 +136,15 @@ get_image_status() {
     echo ${STATUS}
 }
 echo "Create image..."
-IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --name "${IMAGE_NAME}" --left-instance false | awk '{print $2}')
+DESCRIPTION="ニフティクラウドユーザーブログライター作成パブリックイメージ
+
+CoreOSのパブリックイメージです。
+利用方法につきましては、URL先をご確認ください。
+※ユーザーブログライター有志によるイメージ提供となる為、スタンダードイメージ同様OS内容については未サポートとなります。
+※初期設定は予告なく変更される場合がありますので、ご了承ください。
+
+https://coreos.com/docs/running-coreos/cloud-providers/niftycloud/JA_JP/"
+IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --name "${IMAGE_NAME}" -description "${DESCRIPTION}" --left-instance false | awk '{print $2}')
 STATUS=$(get_image_status ${IMAGE_ID})
 while [ "${STATUS}" != "available" ]; do
     sleep 10
@@ -159,6 +167,13 @@ pushd NiftyCloudStorage-SDK-CLI
 ./ncs_cli.sh get ncss://niftycloud-control-panel/master/coreos.png coreos.png
 ./ncs_cli.sh put coreos.png ncss://niftycloud-control-panel/icon/${IMAGE_ID}
 popd
+
+# Publish the image
+export NIFTY_CLOUD_ACCESS_KEY=${NIFTY_ACCESS_KEY_ID}
+export NIFTY_CLOUD_SECRET_KEY=${NIFTY_SECRET_KEY}
+wget -q https://github.com/higebu/nifty-associate-image/releases/download/v1.1/nifty-associate-image
+chmod +x nifty-associate-image
+./nifty-associate-image -public ${IMAGE_ID}
 
 popd
 rm -rf $DIR
