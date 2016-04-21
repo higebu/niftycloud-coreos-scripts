@@ -144,7 +144,7 @@ CoreOSのパブリックイメージです。
 ※初期設定は予告なく変更される場合がありますので、ご了承ください。
 
 https://coreos.com/docs/running-coreos/cloud-providers/niftycloud/JA_JP/"
-IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --name "${IMAGE_NAME}" -description "${DESCRIPTION}" --left-instance false | awk '{print $2}')
+IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --request-method "POST" --name "${IMAGE_NAME}" -description "${DESCRIPTION}" --left-instance false | awk '{print $2}')
 STATUS=$(get_image_status ${IMAGE_ID})
 while [ "${STATUS}" != "available" ]; do
     sleep 10
