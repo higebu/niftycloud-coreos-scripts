@@ -28,13 +28,13 @@ cp -p init.sh $DIR/
 pushd $DIR
 
 # Install NIFTY Cloud CLI
-#wget -q http://cloud.nifty.com/api/sdk/NIFTY_Cloud_api-tools.zip
-#unzip NIFTY_Cloud_api-tools.zip
-#rm -f NIFTY_Cloud_api-tools.zip
-#rm -rf NIFTY_Cloud_api-tools/bin/*.cmd
-#chmod +x NIFTY_Cloud_api-tools/bin/*
-#export NIFTY_CLOUD_HOME=$(pwd)/NIFTY_Cloud_api-tools/
-#export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
+wget -q http://cloud.nifty.com/api/sdk/NIFTY_Cloud_api-tools.zip
+unzip NIFTY_Cloud_api-tools.zip
+rm -f NIFTY_Cloud_api-tools.zip
+rm -rf NIFTY_Cloud_api-tools/bin/*.cmd
+chmod +x NIFTY_Cloud_api-tools/bin/*
+export NIFTY_CLOUD_HOME=$(pwd)/NIFTY_Cloud_api-tools/
+export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
 
 # Check if NIFTY Cloud is in maintenance.
 NIFTYCLOUD_STATUS=$(nifty-describe-service-status)
@@ -153,7 +153,7 @@ CoreOSのパブリックイメージです。
 ※初期設定は予告なく変更される場合がありますので、ご了承ください。
 
 https://coreos.com/docs/running-coreos/cloud-providers/niftycloud/JA_JP/"
-wget -q https://github.com/higebu/nifty-modify-image-attribute/releases/download/v1.0/nifty-modify-image-attribute
+wget -q https://github.com/higebu/nifty-modify-image-attribute/releases/download/v1.1/nifty-modify-image-attribute
 chmod +x nifty-modify-image-attribute
 ./nifty-modify-image-attribute -detail-description "${DESCRIPTION}" ${IMAGE_ID}
 
