@@ -150,12 +150,12 @@ DESCRIPTION="ニフティクラウドユーザーブログライター作成パ�
 CoreOSのパブリックイメージです。
 利用方法につきましては、URL先をご確認ください。
 ※ユーザーブログライター有志によるイメージ提供となる為、スタンダードイメージ同様OS内容については未サポートとなります。
-※初期設定は予告なく変更される場合がありますので、ご了承ください。
-
-https://coreos.com/docs/running-coreos/cloud-providers/niftycloud/JA_JP/"
+※初期設定は予告なく変更される場合がありますので、ご了承ください。"
+CONTACT_URL="https://coreos.com/docs/running-coreos/cloud-providers/niftycloud/JA_JP/"
 wget -q https://github.com/higebu/nifty-modify-image-attribute/releases/download/v1.2/nifty-modify-image-attribute
 chmod +x nifty-modify-image-attribute
 ./nifty-modify-image-attribute -detail-description "${DESCRIPTION}" ${IMAGE_ID}
+./nifty-modify-image-attribute -contact-url "${CONTACT_URL}" ${IMAGE_ID}
 
 # Install NIFTY Cloud Storage CLI
 echo "Install NIFTY Cloud Storage CLI..."
