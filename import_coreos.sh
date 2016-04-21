@@ -28,13 +28,13 @@ cp -p init.sh $DIR/
 pushd $DIR
 
 # Install NIFTY Cloud CLI
-wget -q http://cloud.nifty.com/api/sdk/NIFTY_Cloud_api-tools.zip
-unzip NIFTY_Cloud_api-tools.zip
-rm -f NIFTY_Cloud_api-tools.zip
-rm -rf NIFTY_Cloud_api-tools/bin/*.cmd
-chmod +x NIFTY_Cloud_api-tools/bin/*
-export NIFTY_CLOUD_HOME=$(pwd)/NIFTY_Cloud_api-tools/
-export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
+#wget -q http://cloud.nifty.com/api/sdk/NIFTY_Cloud_api-tools.zip
+#unzip NIFTY_Cloud_api-tools.zip
+#rm -f NIFTY_Cloud_api-tools.zip
+#rm -rf NIFTY_Cloud_api-tools/bin/*.cmd
+#chmod +x NIFTY_Cloud_api-tools/bin/*
+#export NIFTY_CLOUD_HOME=$(pwd)/NIFTY_Cloud_api-tools/
+#export PATH=${PATH}:${NIFTY_CLOUD_HOME}/bin
 
 # Check if NIFTY Cloud is in maintenance.
 NIFTYCLOUD_STATUS=$(nifty-describe-service-status)
@@ -136,6 +136,15 @@ get_image_status() {
     echo ${STATUS}
 }
 echo "Create image..."
+IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --request-method "POST" --name "${IMAGE_NAME}" --left-instance false | awk '{print $2}')
+STATUS=$(get_image_status ${IMAGE_ID})
+while [ "${STATUS}" != "available" ]; do
+    sleep 10
+    STATUS=$(get_image_status ${IMAGE_ID})
+done
+echo "done."
+
+# Modify description
 DESCRIPTION="ニフティクラウドユーザーブログライター作成パブリックイメージ
 
 CoreOSのパブリックイメージです。
@@ -144,13 +153,9 @@ CoreOSのパブリックイメージです。
 ※初期設定は予告なく変更される場合がありますので、ご了承ください。
 
 https://coreos.com/docs/running-coreos/cloud-providers/niftycloud/JA_JP/"
-IMAGE_ID=$(nifty-create-image ${INSTANCE_ID} --request-method "POST" --name "${IMAGE_NAME}" -description "${DESCRIPTION}" --left-instance false | awk '{print $2}')
-STATUS=$(get_image_status ${IMAGE_ID})
-while [ "${STATUS}" != "available" ]; do
-    sleep 10
-    STATUS=$(get_image_status ${IMAGE_ID})
-done
-echo "done."
+wget -q https://github.com/higebu/nifty-modify-image-attribute/releases/download/v1.0/nifty-modify-image-attribute
+chmod +x nifty-modify-image-attribute
+./nifty-modify-image-attribute -detail-description "${DESCRIPTION}" ${IMAGE_ID}
 
 # Install NIFTY Cloud Storage CLI
 echo "Install NIFTY Cloud Storage CLI..."
@@ -164,8 +169,8 @@ sed -i "s/secretKey =/secretKey = ${NIFTY_CLOUD_STORAGE_SECRET_KEY}/" NiftyCloud
 # Get and upload CoreOS icon
 echo "Get and upload CoreOS icon"
 pushd NiftyCloudStorage-SDK-CLI
-./ncs_cli.sh get ncss://niftycloud-control-panel/master/coreos.png coreos.png
-./ncs_cli.sh put coreos.png ncss://niftycloud-control-panel/icon/${IMAGE_ID}
+./ncs_cli.sh get ncss://${NIFTY_CLOUD_STORAGE_BACKET_NAME}/master/coreos.png coreos.png
+./ncs_cli.sh put --acl-public-read coreos.png ncss://${NIFTY_CLOUD_STORAGE_BACKET_NAME}/icon/${IMAGE_ID}
 popd
 
 # Publish the image
