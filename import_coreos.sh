@@ -3,6 +3,8 @@
 # You need to set following environment variables.
 # NIFTY_ACCESS_KEY_ID
 # NIFTY_SECRET_KEY
+# NIFTY_CLOUD_ACCESS_KEY
+# NIFTY_CLOUD_SECRET_KEY
 # NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID
 # NIFTY_CLOUD_STORAGE_SECRET_KEY
 # NIFTY_CLOUD_STORAGE_BACKET_NAME
@@ -152,7 +154,7 @@ CoreOSのパブリックイメージです。
 ※ユーザーブログライター有志によるイメージ提供となる為、スタンダードイメージ同様OS内容については未サポートとなります。
 ※初期設定は予告なく変更される場合がありますので、ご了承ください。"
 CONTACT_URL="https://coreos.com/docs/running-coreos/cloud-providers/niftycloud/JA_JP/"
-wget -q https://github.com/higebu/nifty-modify-image-attribute/releases/download/v1.2/nifty-modify-image-attribute
+wget -q https://github.com/higebu/nifty-modify-image-attribute/releases/download/v1.0/nifty-modify-image-attribute
 chmod +x nifty-modify-image-attribute
 ./nifty-modify-image-attribute -detail-description "${DESCRIPTION}" ${IMAGE_ID}
 ./nifty-modify-image-attribute -contact-url "${CONTACT_URL}" ${IMAGE_ID}
@@ -170,12 +172,10 @@ sed -i "s/secretKey =/secretKey = ${NIFTY_CLOUD_STORAGE_SECRET_KEY}/" NiftyCloud
 echo "Get and upload CoreOS icon"
 pushd NiftyCloudStorage-SDK-CLI
 ./ncs_cli.sh get ncss://${NIFTY_CLOUD_STORAGE_BACKET_NAME}/master/coreos.png coreos.png
-./ncs_cli.sh put --acl-public-read coreos.png ncss://${NIFTY_CLOUD_STORAGE_BACKET_NAME}/icon/${IMAGE_ID}
+./ncs_cli.sh --acl-public-read put coreos.png ncss://${NIFTY_CLOUD_STORAGE_BACKET_NAME}/icon/${IMAGE_ID}
 popd
 
 # Publish the image
-export NIFTY_CLOUD_ACCESS_KEY=${NIFTY_ACCESS_KEY_ID}
-export NIFTY_CLOUD_SECRET_KEY=${NIFTY_SECRET_KEY}
 wget -q https://github.com/higebu/nifty-associate-image/releases/download/v1.1/nifty-associate-image
 chmod +x nifty-associate-image
 ./nifty-associate-image -public ${IMAGE_ID}
