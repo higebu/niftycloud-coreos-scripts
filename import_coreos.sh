@@ -11,6 +11,7 @@
 # COREOS_CHANNEL
 # SUFFIX
 
+cd $(dirname $0)
 WORKDIR=$(pwd)
 
 if [ "$COREOS_CHANNEL" == "" ] ; then
@@ -163,7 +164,7 @@ wget -q http://cloud.nifty.com/api/storage/NiftyCloudStorage-SDK-CLI.zip
 unzip NiftyCloudStorage-SDK-CLI.zip
 rm -f NiftyCloudStorage-SDK-CLI.zip
 chmod +x NiftyCloudStorage-SDK-CLI/ncs_cli.sh
-cp credentials.properties NiftyCloudStorage-SDK-CLI/credentials.properties
+cp ${WORKDIR}/credentials.properties NiftyCloudStorage-SDK-CLI/credentials.properties
 
 # Get and upload CoreOS icon
 echo "Get and upload CoreOS icon"
