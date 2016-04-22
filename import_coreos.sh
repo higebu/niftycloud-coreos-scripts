@@ -5,8 +5,6 @@
 # NIFTY_SECRET_KEY
 # NIFTY_CLOUD_ACCESS_KEY
 # NIFTY_CLOUD_SECRET_KEY
-# NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID
-# NIFTY_CLOUD_STORAGE_SECRET_KEY
 # NIFTY_CLOUD_STORAGE_BACKET_NAME
 # NIFTY_ZONE
 # NIFTY_FW_GROUP
@@ -165,8 +163,7 @@ wget -q http://cloud.nifty.com/api/storage/NiftyCloudStorage-SDK-CLI.zip
 unzip NiftyCloudStorage-SDK-CLI.zip
 rm -f NiftyCloudStorage-SDK-CLI.zip
 chmod +x NiftyCloudStorage-SDK-CLI/ncs_cli.sh
-sed -i "s/accessKey =/accessKey = ${NIFTY_CLOUD_STORAGE_ACCESS_KEY_ID}/" NiftyCloudStorage-SDK-CLI/credentials.properties
-sed -i "s/secretKey =/secretKey = ${NIFTY_CLOUD_STORAGE_SECRET_KEY}/" NiftyCloudStorage-SDK-CLI/credentials.properties
+cp credentials.properties NiftyCloudStorage-SDK-CLI/credentials.properties
 
 # Get and upload CoreOS icon
 echo "Get and upload CoreOS icon"
@@ -178,7 +175,7 @@ popd
 # Publish the image
 wget -q https://github.com/higebu/nifty-associate-image/releases/download/v1.1/nifty-associate-image
 chmod +x nifty-associate-image
-./nifty-associate-image -public ${IMAGE_ID}
+./nifty-associate-image -public -redistribute ${IMAGE_ID}
 
 popd
 rm -rf $DIR

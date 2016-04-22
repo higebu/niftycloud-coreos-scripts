@@ -7,15 +7,13 @@ env:
   - COREOS_CHANNEL=Beta
   - COREOS_CHANNEL=Alpha
   global:
-  - secure: ENTNFaO0hUnceUqjdxiw1Qt0OhZC+RVWfRGdFOSb+lD30YOovaj7kGBg8WgOu8wRpXOv6qOYqP3DVnSFFScSLXzg/ZvwZhMlXkxiodTw4jh3/vmXWs13vEscgXPNWsBpbzlroEd1ArgyEcSWKebPpooqBEXSiuis1jXuFtbbsKE=
-  - secure: gugsA/50T9d+p1ORAgodTzyfudipzU75RHiYHyNGNILj7I0Z0lb9q+uYR4AGlFVBglHSDwBGQPZfmeoQ60zme8NDpXGCMJBA9sdntF6eK2HUFZxcVUW4ZMVRPm9P/KCIPO0qnsttO4ILOS/PjhGI84ospRQwYVJqrhI+IQLbqds=
-  - secure: Jol9khL4xh46vg/NsO2qLnv8TM6uw1twp5N38HPaidOLcB0C3kVxB9U9fxD3g59HvlJVRvsLMsDIsjwR40RBA2FeGKaR5QyfAB2wRAU5x1sE4M62bytlWiAOroSN9XQIaQlqene9u/qAf+5jb94l8ZcZp+BeHTARQfzF5Ssa8nw=
-  - secure: GZ9xCDv8k74DPrZaFI5zUSmfbJ0x4aSlBj/odXhN+FwKnuMuXaaew6UqpkK06XhhohSPoRsCIVswR3ON0fB6j7Uhlwg05R5p/8itdLJtQbM3XI+J4G8v+9obJ4qUEwNH5nirBFRHk4zFh6U0CRimRjrqBiE83iSucTx5oCVYpJE=
-  - secure: aFXLHnwJVFmJnA+3M78zifCKMIw4mrUBIkadNrwwHfuw4p6olHNs0XNoJ6W2tclOo8KTIPNbCCRHTJ1yLrToR0nTBiHVyx66Xs2YAd+9LNYRauT92o2Vy2VU7+l8MnxJXBq7qGVNqOOSC3SO/20LH1n1yaBr70sHkw6ns4j5YAU=
-  - secure: VVonN2XdwShP4E/KA1JLT4cKyCfJKfJuG8KmVcmb+y+7z7YmOLacRCdYPDEA1o3QglWevpbTkWspZXNjZNRLYsNArkoD2lwlOJAen7CoMDYWUHzSmwM11fDr+Xo4aIlQhkkXiO4LRNZZ/8ft5VsMp0xUc/LmtHltFeS99uqt7wM=
-  - secure: MXtPDoMHy7qPIKsrUVXrZbn2mFwuttVXIKLmAHcH3lkoN3ZeOg9Xb04jfKbXU4Dl3edzM2KpAFoPvOaPgO2yxGJGc/h66O5NrDuSKbQNrEvb8XLCKuEFp8f/1AKIlN3K94wDlIutuVQob42O0P3MDXnod5mF2RYAsZfCVx9TCEc=
-  - secure: SC0q3VK6EYSwl/ulxJ+J/8RKLejmu6E9NndiriyTl9bVonyL5jihpdMJcoSxcZo/1mpVhXFCwB37SsSg298+Cm1SDq6pvfemrEGOZ4ZdBwTHtPb3WtM7zNA439ToRyLtRgQnE9mVcYy7eHdYVwKBHkiJh8QJvxpZ/GYPLGoE1L8=
-  - secure: d39cXmSd5sY2zTsFXO8NZfUKZx2KBHw35Jzv+IQYGAhfq+bR7X/tnkFqcIPxrDlOlV5MFGy5eItELvBgL7D30Oqm5TVAoAGOvzGL//aWUGVMkrulkhibxLchjnAhYRqmKRwVu+zxIRkiqET3Wog7xJpCCgWNBkGtafXEYaXmxcE=
+  - secure: aUTndP8EqrDRSQAICFHRJyigKvUCCQ/dFZIgYvUhK6DpnMsNZem/5J/e4Gt+B+F/cYi23xUuH9iQrrhr3RJy/3YXGTWbhFgFApVKtk5eKz24KJAKPrbFvPpiVSf+Vgfh0LMUXp2IlwqFcexW7K3RxS0WxiQh2Fmo6URkRzxnz44=
+  - secure: MFTLvUWalBr793PpDjB6OPIX8/EhmxODcLotns8Mx1A5lAt733wJe5+z8uybk/DGKUbpmWh0EW4Dcx06c/MkPWW1hnf/YQex1XmQoKd19dfUirJ8IV8LoF47nuU57OUq3IFCuMpXEZosYGNfh3kQHwZsiyKpi/DhU+AIlUXqXEk=
+  - secure: S+1GvO9wlvnNur0/ZxtIKq9q3uhP/UdTKQGX22YU1wRrNKfYkb22TJDZtmDCBnO79GQEN+zZct54BCVx3p4CxSReF4RPeYOFsW42kP1c6vAeEa8bn+y9bYphDN4ZpW0E8EwkoxKXUm6d9KItstbfILY35MJ1xHhtGHqSj8jihOU=
+  - secure: FRbDzxA4A8zyAHyzZWoMGCyRmsk0n0RYRHlibnbelszRxam17OqWjnVTIzzauQMIyuqQ3oi3k48jUBaYd2RaCXzDABKmlk9QSHD9Q2Sm7YeMQvJHmYLwWxlUsTEA73XSujCH69KH+gSf6b4REWM1IRi+esRgQUxsT2SJ7ItkcUg=
+  - secure: B1l0+8+LhvOgQuxfDJXrya5OsFC/uvkvrmbnwj9/VrNcWQlBTSVstPrrdDADR+Bu8YSrHPGVXNC0APcj3jLYKfRDHSwfslvbWhY2CQBjeweo8cJRG/ap69Oc7GFDCaxaSIF2bZ6Qeal4c7Zyeo5z5CZicJD9aiOLsqcRwupAhtg=
+  - secure: DGyGiJ+rJrSRVkoidQPqrDnqqC8kgxTOwjJAVUDiTf0ZP971QJTHWi5yM1D/6Y27NxHIcLfae1bTgOFwrb6u/SVhVpY/0gRvDCqhRN87ysSWrN0rKQHB4wXy5tBaS2Thd9tWN61cNQSwUXwbK2aBFt7RuRs0AMr+co2DRAtW4MY=
+  - secure: exjLs2/EK4B2H+lSOedvb5bpbQX3O0CVUzm08Yql/1ehU/IyLtkBuoRdtg5p739jDwPPoURuloUNBXyoz6LPlBuniWm2/xU5pnLJqjZvQGQ6Uxkm03PZYWe3jdphT8JKHgLSlc5WQ1WepLTsMvXcEZwIh2vPBTReAe1FbsqzF2I=
 matrix:
   allow_failures:
   - env: COREOS_CHANNEL=Stable
@@ -26,3 +24,6 @@ notifications:
   email:
     on_success: change
     on_failure: change
+before_install:
+- openssl aes-256-cbc -K $encrypted_bc0d585c17e3_key -iv $encrypted_bc0d585c17e3_iv
+  -in credentials.properties.enc -out credentials.properties -d
